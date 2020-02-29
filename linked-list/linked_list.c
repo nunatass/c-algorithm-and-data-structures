@@ -59,20 +59,20 @@ linked_list *list_new()
 }
 
 //list size
-int list_length(linked_list *lista)
+int list_length(linked_list *list)
 {
-    return lista->length;
+    return list->length;
 }
 
-bool list_empty(linked_list *lista)
+bool list_empty(linked_list *list)
 {
-    return lista->length == 0;
+    return list->length == 0;
 }
 
 //insertion at the start of the list
-bool list_insert(linked_list *lista, int value)
+bool list_insert(linked_list *list, int value)
 {
-    node *new_node = node_new(lista->head, lista->head->next, value);
+    node *new_node = node_new(list->head, list->head->next, value);
 
     if (new_node == NULL)
         return false;
@@ -81,43 +81,43 @@ bool list_insert(linked_list *lista, int value)
         new_node->next->previous = new_node;
 
     //set the new node as the head next node
-    lista->head->next = new_node;
+    list->head->next = new_node;
 
-    lista->length++;
+    list->length++;
 
     //checking if it is the first insertion, so set the tail as this node
-    if (lista->head == lista->tail)
-        lista->tail = new_node;
+    if (list->head == list->tail)
+        list->tail = new_node;
 
     return true;
 }
 
 //insertion at the and of the list
-bool list_insert_end(linked_list *lista, int value)
+bool list_insert_end(linked_list *list, int value)
 {
-    node *new_node = node_new(lista->tail, NULL, value);
+    node *new_node = node_new(list->tail, NULL, value);
 
     if (new_node == NULL)
         return false;
 
     //linking the last tail to the new node
-    lista->tail->next = new_node;
+    list->tail->next = new_node;
 
     //set the new tail as the new node
-    lista->tail = new_node;
+    list->tail = new_node;
 
-    lista->length++;
+    list->length++;
 
     return true;
 }
 
-bool list_insert_at_position(linked_list *lista, int value, int position)
+bool list_insert_at_position(linked_list *list, int value, int position)
 {
     //check if position isn't out of the range
-    if (position < 0 || position > lista->length)
+    if (position < 0 || position > list->length)
         return false;
 
-    node *current = lista->head;
+    node *current = list->head;
 
     for (int index = 0; index < position; index++)
         current = current->next;
@@ -130,16 +130,16 @@ bool list_insert_at_position(linked_list *lista, int value, int position)
     //linking the previous node to the new node
     current->next = new_node;
 
-    lista->length++;
+    list->length++;
 
     return true;
 }
 
 //TODO: later, change this name to list_get_at_position
 /// get the value at the position n
-int list_nth(linked_list *lista, int position)
+int list_nth(linked_list *list, int position)
 {
-    node *current = lista->head;
+    node *current = list->head;
 
     for (int index = 0; index < position; index++)
         current = current->next;
@@ -148,9 +148,9 @@ int list_nth(linked_list *lista, int position)
 }
 
 // remove the fst occurrence of the value
-bool list_remove(linked_list *lista, int value)
+bool list_remove(linked_list *list, int value)
 {
-    node *current = lista->head->next;
+    node *current = list->head->next;
 
     while (current != NULL)
     {
@@ -173,9 +173,9 @@ bool list_remove(linked_list *lista, int value)
     return false;
 }
 
-int list_remove_at_position(linked_list *lista, int position)
+int list_remove_at_position(linked_list *list, int position)
 {
-    node *current = lista->head->next;
+    node *current = list->head->next;
 
     for (int i = 0; i < position; i++)
         current = current->next;
@@ -189,15 +189,15 @@ int list_remove_at_position(linked_list *lista, int position)
 
     free(current);
 
-    lista->length--;
+    list->length--;
 
     return removed_value;
 }
 
 //find the fst occurrence of the value
-int list_find(linked_list *lista, int value)
+int list_find(linked_list *list, int value)
 {
-    node *current = lista->head;
+    node *current = list->head;
 
     for (int i = 0; current->next != NULL; i++)
     {
@@ -211,9 +211,9 @@ int list_find(linked_list *lista, int value)
 }
 
 //replace the current value at the given position to a new value
-void list_replace_at(linked_list *lista, int value, int position)
+void list_replace_at(linked_list *list, int value, int position)
 {
-    node *current = lista->head;
+    node *current = list->head;
 
     for (int i = 0; i < position; i++)
         current = current->next;
@@ -222,9 +222,9 @@ void list_replace_at(linked_list *lista, int value, int position)
 }
 
 //print the list values [l1 l2 ...]
-void list_print(linked_list *lista)
+void list_print(linked_list *list)
 {
-    node *current = lista->head->next;
+    node *current = list->head->next;
 
     printf("[");
 
@@ -239,10 +239,10 @@ void list_print(linked_list *lista)
 }
 
 // free all memory used in the list
-void list_destroy(linked_list *lista)
+void list_destroy(linked_list *list)
 {
 
-    node *current = lista->head;
+    node *current = list->head;
 
     node *next = current->next;
 
@@ -255,5 +255,5 @@ void list_destroy(linked_list *lista)
         next = next->next;
     };
 
-    lista->length;
+    free(list);
 }
