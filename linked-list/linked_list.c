@@ -265,38 +265,3 @@ void list_destroy(linked_list *list)
 
     free(list);
 }
-
-void swap(node *node1, node *node2)
-{
-    node helper = *node1;
-    *node1 = *node2;
-    *node2 = helper;
-}
-
-//linked-list quick sort
-void sort(linked_list *list)
-{
-}
-
-void linked_list_qsort(linked_list *list, int i, int j)
-{
-    int middle = (i + j) / 2;
-    node *traget = list_nth_node(list, middle);
-
-    while (i <= middle || j >= middle)
-    {
-        if (i > j)
-            return;
-
-        while (list_nth_node(list, i)->data <= traget->data)
-            i++;
-
-        while (traget->data >= list_nth_node(list, j)->data)
-            j--;
-
-        swap(list_nth_node(list, j), list_nth_node(list, i));
-    }
-
-    linked_list_qsort(list, 0, middle);
-    linked_list_qsort(list, middle, list->length - 1);
-}
