@@ -24,7 +24,7 @@ typedef struct list
 
 } list;
 
-//node Initialization
+//node initialization
 node *node_new(node *previous, node *next, int value)
 {
     node *new_node = malloc(sizeof(node));
@@ -41,7 +41,7 @@ node *node_new(node *previous, node *next, int value)
     return new_node;
 }
 
-//linked_list Initialization
+//linked_list initialization
 list *list_new()
 {
     list *new_list = malloc(sizeof(list));
@@ -156,7 +156,7 @@ bool list_remove(list *lista, int value)
     {
         if (current->data == value)
         {
-            //linking the current previous node, to the current next node
+            //linking the previous of current node, to the next of current node
             current->previous->next = current->next;
 
             if (current->next != NULL)
@@ -194,7 +194,7 @@ int list_remove_at_position(list *lista, int position)
     return removed_value;
 }
 
-//find find the fst occurrence of the value
+//find the fst occurrence of the value
 int list_find(list *lista, int value)
 {
     node *current = lista->head;
@@ -231,14 +231,14 @@ void list_print(list *lista)
     while (current != NULL)
     {
         printf("%d ", current->data);
-        //printf("p%d c%d n%d\n", current->previous->data, current->data, current->next->data);
+
         current = current->next;
     }
 
     printf("]\n");
 }
 
-// free all memory used the list
+// free all memory used in the list
 void list_destroy(list *lista)
 {
 
