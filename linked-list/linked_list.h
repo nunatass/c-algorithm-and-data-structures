@@ -33,6 +33,6 @@ void list_print(linked_list *list);
 void list_destroy(linked_list *list); // free the list memory
 
 //extra extra
-linked_list *sort(linked_list *list);
+void sort(linked_list *list);
 
 #endif
