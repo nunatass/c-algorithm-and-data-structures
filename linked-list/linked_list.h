@@ -17,8 +17,7 @@ bool list_insert_end(linked_list *list, int value); //insert at the end of the l
 
 bool list_insert_at_position(linked_list *list, int value, int position);
 
-//TODO: later change name to list_get_at_position
-int list_nth(linked_list *list, int n); // get the value at the position n
+int list_get_at_position(linked_list *list, int n); // get the value at the position n
 
 bool list_remove(linked_list *list, int value); // remove the fst occurrence of the value
 

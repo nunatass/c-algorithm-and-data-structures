@@ -136,7 +136,7 @@ bool list_insert_at_position(linked_list *list, int value, int position)
 }
 
 /// get the value at the position n
-node *list_nth_node(linked_list *list, int position)
+node *list_get_node_at_position(linked_list *list, int position)
 {
     node *current = list->head;
 
@@ -148,9 +148,9 @@ node *list_nth_node(linked_list *list, int position)
 
 //TODO: later, change this name to list_get_at_position
 /// get the value at the position n
-int list_nth(linked_list *list, int position)
+int list_get_at_position(linked_list *list, int position)
 {
-    return list_nth_node(list, position)->data;
+    return list_get_node_at_position(list, position)->data;
 }
 
 // remove the fst occurrence of the value
