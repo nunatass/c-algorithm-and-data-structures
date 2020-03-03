@@ -11,12 +11,12 @@ typedef struct stack
     int max_size;
     int top;
 
-} stack;
+} * Stack;
 
 //stack initialization
-stack *new_stack(int max_size)
+Stack new_stack(int max_size)
 {
-    stack *new_stack = malloc(sizeof(stack));
+    Stack new_stack = malloc(sizeof(Stack));
 
     new_stack->arr = malloc(max_size * sizeof(int));
 
@@ -30,8 +30,22 @@ stack *new_stack(int max_size)
     return new_stack;
 }
 
+//resize the stack capacity
+Stack stack_resize(Stack stack, int new_max_size)
+{
+
+    Stack new_stack = realloc(stack, new_max_size);
+
+    if (new_stack != NULL)
+        return new_stack;
+
+    printf("Error resizing stack\n");
+
+    return stack;
+}
+
 //insertion in top of the stack
-void stack_push(stack *stack, int value)
+void stack_push(Stack stack, int value)
 {
     stack->top++;
 
@@ -39,18 +53,18 @@ void stack_push(stack *stack, int value)
 }
 
 // get the size of the stack
-int stack_size(stack *stack)
+int stack_size(Stack stack)
 {
     return stack->top + 1;
 }
 
-bool stack_is_empty(stack *stack)
+bool stack_is_empty(Stack stack)
 {
     return stack->top == -1;
 }
 
 // remove the element in top of the stack
-int stack_top(stack *stack)
+int stack_top(Stack stack)
 {
     if (stack_is_empty(stack))
         return INT_MIN;
@@ -59,7 +73,7 @@ int stack_top(stack *stack)
 }
 
 //get the element in top of the stack
-int stack_pop(stack *stack)
+int stack_pop(Stack stack)
 {
     if (stack_is_empty(stack))
         return INT_MIN;
@@ -72,7 +86,7 @@ int stack_pop(stack *stack)
 }
 
 // fre all stack memory
-void stack_free(stack *stack)
+void stack_free(Stack stack)
 {
     for (int i = stack->max_size - 1; i <= 0; i--)
         free(stack->arr[i]);
@@ -81,7 +95,7 @@ void stack_free(stack *stack)
 }
 
 //print all elements in the stack
-void stack_print(stack *stack)
+void stack_print(Stack stack)
 {
     printf("[");
 

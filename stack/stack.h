@@ -3,22 +3,24 @@
 
 #ifndef STACK_H
 
-typedef struct stack *stack;
+typedef struct stack *Stack;
 
-stack new_stack();
+Stack new_stack(int max_size);
 
-void stack_push(stack stack, int value); // insert data into stack
+Stack stack_resize(Stack stack, int new_max_size); //resize the stack capacity
 
-int stack_size(stack stack); // get the stack size
+void stack_push(Stack stack, int value); // insert data into stack
 
-bool stack_is_empty(stack stack); //check if stack is empty
+int stack_size(Stack stack); // get the stack size
 
-int stack_top(stack stack); // get the last stack element
+bool stack_is_empty(Stack stack); //check if stack is empty
 
-int stack_pop(stack stack); // remove the last stack element
+int stack_top(Stack stack); // get the last stack element
 
-void stack_print(stack stack); // print all stack elements
+int stack_pop(Stack stack); // remove the last stack element
 
-void stack_free(stack stack); // free stack memory
+void stack_print(Stack stack); // print all stack elements
+
+void stack_free(Stack stack); // free stack memory
 
 #endif
