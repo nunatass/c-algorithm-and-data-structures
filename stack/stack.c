@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 //#define MAX_SIZE 1000
-#define INT_MIN -2147483647
+#define INT_MIN -2147483648
 
 typedef struct stack
 {
