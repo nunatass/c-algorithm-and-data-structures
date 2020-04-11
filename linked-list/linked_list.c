@@ -11,23 +11,23 @@ typedef struct node
 
     struct node *previous;
 
-} node;
+} * node;
 
 //linked-list list
 typedef struct list
 {
-    node *head;
+    node head;
 
-    node *tail;
+    node tail;
 
     int length;
 
-} linked_list;
+} * linked_list;
 
 //node initialization
-node *node_new(node *previous, node *next, int value)
+node node_new(node previous, node next, int value)
 {
-    node *new_node = malloc(sizeof(node));
+    node new_node = malloc(sizeof(struct node));
 
     if (new_node == NULL)
         return NULL;
@@ -42,9 +42,9 @@ node *node_new(node *previous, node *next, int value)
 }
 
 //linked_list initialization
-linked_list *list_new()
+linked_list list_new()
 {
-    linked_list *new_list = malloc(sizeof(linked_list));
+    linked_list new_list = malloc(sizeof(struct list));
 
     if (new_list == NULL)
         return NULL;
@@ -59,20 +59,20 @@ linked_list *list_new()
 }
 
 //list size
-int list_length(linked_list *list)
+int list_length(linked_list list)
 {
     return list->length;
 }
 
-bool list_empty(linked_list *list)
+bool list_empty(linked_list list)
 {
     return list->length == 0;
 }
 
 //insertion at the start of the list
-bool list_insert(linked_list *list, int value)
+bool list_insert(linked_list list, int value)
 {
-    node *new_node = node_new(list->head, list->head->next, value);
+    node new_node = node_new(list->head, list->head->next, value);
 
     if (new_node == NULL)
         return false;
@@ -93,9 +93,9 @@ bool list_insert(linked_list *list, int value)
 }
 
 //insertion at the and of the list
-bool list_insert_end(linked_list *list, int value)
+bool list_insert_end(linked_list list, int value)
 {
-    node *new_node = node_new(list->tail, NULL, value);
+    node new_node = node_new(list->tail, NULL, value);
 
     if (new_node == NULL)
         return false;
@@ -111,18 +111,18 @@ bool list_insert_end(linked_list *list, int value)
     return true;
 }
 
-bool list_insert_at_position(linked_list *list, int value, int position)
+bool list_insert_at_position(linked_list list, int value, int position)
 {
     //check if position isn't out of the range
     if (position < 0 || position > list->length)
         return false;
 
-    node *current = list->head;
+    node current = list->head;
 
     for (int index = 0; index < position; index++)
         current = current->next;
 
-    node *new_node = node_new(current, current->next, value);
+    node new_node = node_new(current, current->next, value);
 
     if (new_node == NULL)
         return false;
@@ -136,9 +136,9 @@ bool list_insert_at_position(linked_list *list, int value, int position)
 }
 
 /// get the value at the position n
-node *list_get_node_at_position(linked_list *list, int position)
+node list_get_node_at_position(linked_list list, int position)
 {
-    node *current = list->head;
+    node current = list->head;
 
     for (int index = 0; index < position; index++)
         current = current->next;
@@ -148,15 +148,15 @@ node *list_get_node_at_position(linked_list *list, int position)
 
 //TODO: later, change this name to list_get_at_position
 /// get the value at the position n
-int list_get_at_position(linked_list *list, int position)
+int list_get_at_position(linked_list list, int position)
 {
     return list_get_node_at_position(list, position)->data;
 }
 
 // remove the fst occurrence of the value
-bool list_remove(linked_list *list, int value)
+bool list_remove(linked_list list, int value)
 {
-    node *current = list->head->next;
+    node current = list->head->next;
 
     while (current != NULL)
     {
@@ -165,8 +165,11 @@ bool list_remove(linked_list *list, int value)
             //linking the previous of current node, to the next of current node
             current->previous->next = current->next;
 
+            // linking current next previous with current previous node
             if (current->next != NULL)
                 current->next->previous = current->previous;
+            else
+                list->tail = current->previous; // set tail to curret previous  node
 
             free(current);
 
@@ -181,17 +184,22 @@ bool list_remove(linked_list *list, int value)
     return false;
 }
 
-int list_remove_at_position(linked_list *list, int position)
+int list_remove_at_position(linked_list list, int position)
 {
-    node *current = list->head->next;
+    node current = list->head->next;
 
     for (int i = 0; i < position; i++)
         current = current->next;
 
+    // linking current previous next to  current next ndoe
     current->previous->next = current->next;
 
+    // linking current next previous with current previeus node
     if (current->next != NULL)
         current->next->previous = current->previous;
+
+    else
+        list->tail = current->previous; // set tail to curret previous  node
 
     int removed_value = current->data;
 
@@ -203,9 +211,9 @@ int list_remove_at_position(linked_list *list, int position)
 }
 
 //find the fst occurrence of the value
-int list_find(linked_list *list, int value)
+int list_find(linked_list list, int value)
 {
-    node *current = list->head;
+    node current = list->head;
 
     for (int i = 0; current->next != NULL; i++)
     {
@@ -219,9 +227,9 @@ int list_find(linked_list *list, int value)
 }
 
 //replace the current value at the given position to a new value
-void list_replace_at(linked_list *list, int value, int position)
+void list_replace_at(linked_list list, int value, int position)
 {
-    node *current = list->head;
+    node current = list->head;
 
     for (int i = 0; i < position; i++)
         current = current->next;
@@ -230,9 +238,9 @@ void list_replace_at(linked_list *list, int value, int position)
 }
 
 //print the list values [l1 l2 ...]
-void list_print(linked_list *list)
+void list_print(linked_list list)
 {
-    node *current = list->head->next;
+    node current = list->head->next;
 
     printf("[");
 
@@ -247,12 +255,12 @@ void list_print(linked_list *list)
 }
 
 // free all memory used in the list
-void list_destroy(linked_list *list)
+void list_destroy(linked_list list)
 {
 
-    node *current = list->head;
+    node current = list->head;
 
-    node *next = current->next;
+    node next = current->next;
 
     while (next != NULL)
     {
